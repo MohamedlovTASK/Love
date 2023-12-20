@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coded Message</title>
+    <title>Guess the Number</title>
 </head>
 <body>
 
-    <p id="codedMessage">9 12 15 22 5 25 15 21</p>
-    <button id="legendButton">Reveal Legend</button>
-    <p id="legend" style="display: none;">A=1, B=2, C=3, ...</p>
+    <p id="codedMessage">Guess the number to win a heart!</p>
+    <input type="number" id="guessInput" placeholder="Enter your guess">
+    <button id="submitGuess">Submit Guess</button>
+    <p id="result" style="display: none;"></p>
 
     <script>
-        document.getElementById('legendButton').addEventListener('click', function() {
-            document.getElementById('legend').style.display = 'block';
-        });
+        // Generate a random number between 1 and 10
+        const secretNumber = Math.floor(Math.random() * 10) + 1;
+
+        // Function to handle the guess submission
+        function submitGuess() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            const resultMessage = document.getElementById('result');
+
+            // Check if the guess is correct
+            if (!isNaN(userGuess) && userGuess === secretNumber) {
+                resultMessage.textContent = "Congratulations! You win a heart. ❤️ I love you (I made this site).";
+            } else {
+                resultMessage.textContent = "Sorry, try again!";
+            }
+
+            // Display the result message
+            resultMessage.style.display = 'block';
+        }
+
+        // Attach the function to the button click event
+        document.getElementById('submitGuess').addEventListener('click', submitGuess);
     </script>
 
 </body>
