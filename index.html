@@ -48,24 +48,30 @@
     <p>Sooo, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (prefer Discord), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;</p>
 </div>
 
-<div id="buttons">
+<div id="buttons" style="display: none;">
     <button onclick="respondToLove(true)">I love you too</button>
     <button onclick="respondToLove(false)">I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)</button>
 </div>
 
-<div id="resultMessage" style="display: none;"></div>
+<div id="resultMessage"></div>
 
 <script>
-    function respondToLove(accept) {
+    document.addEventListener('DOMContentLoaded', function() {
         const resultMessage = document.getElementById('resultMessage');
-        if (accept) {
+        const buttonsDiv = document.getElementById('buttons');
+
+        // Simulating a response (true for "I love you too", false for the other option)
+        const herChoice = true;
+
+        if (herChoice) {
             resultMessage.textContent = "Yay! I'm so happy! ❤️";
         } else {
             resultMessage.textContent = "Oh no! 😢 Well, I'll be a little sad, but your happiness is important!";
         }
+
         resultMessage.style.display = 'block';
-        document.getElementById('buttons').style.display = 'none';
-    }
+        buttonsDiv.style.display = 'none';
+    });
 </script>
 
 </body>
