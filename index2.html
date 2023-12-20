@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coded Message</title>
+</head>
+<body>
+
+    <p id="codedMessage">9 12 15 22 5 25 15 21</p>
+    <button id="legendButton">Reveal Legend</button>
+    <p id="legend" style="display: none;">A=1, B=2, C=3, ...</p>
+
+    <script>
+        document.getElementById('legendButton').addEventListener('click', function() {
+            document.getElementById('legend').style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
