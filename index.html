@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Confession Challenge</title>
+    <title>Love Confession</title>
     <style>
         body {
             margin: 0;
-            overflow: hidden;
             font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
         }
 
-        canvas {
-            display: block;
-        }
-
-        #challenge {
-            font-size: 1.2em;
+        #loveMessage {
             margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        #options {
-            display: flex;
-            justify-content: center;
+        #buttons {
             margin-top: 20px;
         }
 
@@ -32,137 +30,43 @@
             margin: 0 10px;
             cursor: pointer;
         }
+
+        #resultMessage {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
 
-<canvas id="gameCanvas" width="800" height="400"></canvas>
-<div id="challenge">
-    <p>Can you complete the challenge and accept the love confession?</p>
-    <p>Jump over the obstacle below!</p>
-</div>
-<div id="options" style="display: none;">
-    <button id="acceptButton" onclick="displayLoveMessage(true)">Accept</button>
-    <button id="declineButton" onclick="displayLoveMessage(false)">Decline</button>
-</div>
-<div id="loveMessage" style="display: none;">
+<div id="loveMessage">
     <p>Hey, so you are here! What do you think? Nice site, huh? No? Alright, anyways...</p>
-    <!-- Add the love confession message here -->
+    <p>You might know who I am. Yes, it's me. The guy in your mind right now, that's me 100%.</p>
+    <p>I trust that you will recognize me. I guess, how are you? Oh right, this isn't chatting...</p>
+    <p>I love you. No, like I mean it. I LOVE YOU. I really don't know how to express this feeling, just imagine the sentence i love you but 10^100 (alot) stronger</p>
+    <p>Hey, just in case you don't know who I am, I am the one who sits after you. Haha, get it? Like that day you asked me about if "after" means in front. What's that, not funny? Alright, I respect that. Anyways...</p>
+    <p>Sooo, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (prefer Discord), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;</p>
 </div>
+
+<div id="buttons">
+    <button onclick="respondToLove(true)">I love you too</button>
+    <button onclick="respondToLove(false)">I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)</button>
+</div>
+
+<div id="resultMessage" style="display: none;"></div>
 
 <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const player = {
-        x: 50,
-        y: canvas.height - 50,
-        width: 40,
-        height: 40,
-        color: 'red',
-        jumping: false,
-        jumpHeight: 100,
-        yVelocity: 0
-    };
-
-    const obstacle = {
-        x: canvas.width - 100,
-        y: canvas.height - 50,
-        width: 30,
-        height: 30,
-        color: 'green'
-    };
-
-    let challengeComplete = false;
-
-    function drawPlayer() {
-        ctx.fillStyle = player.color;
-        ctx.fillRect(player.x, player.y, player.width, player.height);
-    }
-
-    function drawObstacle() {
-        ctx.fillStyle = obstacle.color;
-        ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-    }
-
-    function jump() {
-        if (!player.jumping) {
-            player.jumping = true;
-            player.yVelocity = -7;
-        }
-    }
-
-    function checkCollision() {
-        return (
-            player.x < obstacle.x + obstacle.width &&
-            player.x + player.width > obstacle.x &&
-            player.y < obstacle.y + obstacle.height &&
-            player.y + player.height > obstacle.y
-        );
-    }
-
-    function update() {
-        // Update player position and velocity
-        player.yVelocity += 0.3; // Gravity
-        player.y += player.yVelocity;
-
-        // Check for collision with the ground
-        if (player.y > canvas.height - player.height) {
-            player.y = canvas.height - player.height;
-            player.jumping = false;
-        }
-
-        // Check for collision with the obstacle
-        if (checkCollision()) {
-            challengeComplete = true;
-            document.getElementById('challenge').innerHTML = '<p>Challenge complete! Now, choose your response:</p>';
-            document.getElementById('options').style.display = 'flex';
-        }
-
-        // Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw player and obstacle
-        drawPlayer();
-        drawObstacle();
-
-        // Repeat the update function
-        requestAnimationFrame(update);
-    }
-
-    // Handle jump on spacebar press
-    window.addEventListener('keydown', function(event) {
-        if (event.code === 'Space') {
-            jump();
-        }
-    });
-
-    function displayLoveMessage(accept) {
+    function respondToLove(accept) {
+        const resultMessage = document.getElementById('resultMessage');
         if (accept) {
-            document.getElementById('loveMessage').innerHTML = `
-                <p>Hey, so you are here! What do you think? Nice site, huh? No? Alright, anyways...</p>
-                <p>You might know who I am. Yes, it's me. The guy in your mind right now, that's me 100%.</p>
-                <p>I trust that you will recognize me. I guess, how are you? Oh right, this isn't chatting...</p>
-                <p>I really don't know how to express this feeling 100% correctly,just imagine the sentence *i love you* but 10000% stronger</p>
-                <p>Hey, just in case you don't know who I am, I am the one who sits after you. Haha, get it? Like that day you asked me about if "after" is in front, which is obviously not. What's that, not funny? Alright, I respect that. Anyways...</p>
-                <p>So, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (discord preferd), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;</p>
-
-            `;
+            resultMessage.textContent = 'Yay! I'm so happy! ❤️';
         } else {
-            document.getElementById('loveMessage').innerHTML = '<p>Maybe next time! Take care!</p>';
+            resultMessage.textContent = 'Oh no! 😢 Well, a bit sad sad, but your happiness is important!';
         }
-
-        document.getElementById('loveMessage').style.display = 'block';
-        document.getElementById('options').style.display = 'none';
+        resultMessage.style.display = 'block';
+        document.getElementById('buttons').style.display = 'none';
     }
-
-    // Start the game loop
-    update();
 </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
