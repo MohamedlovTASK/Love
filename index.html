@@ -71,7 +71,7 @@
 
             // Check for passing pipes and update score
             pipes.forEach(pipe => {
-                if (pipe.offsetLeft + pipe.offsetWidth < flappyBeard.offsetLeft && pipe.passed !== true) {
+                if (pipe.offsetLeft + pipe.offsetWidth < flappyBeard.offsetLeft && !pipe.passed) {
                     score++;
                     scoreDisplay.textContent = 'Score: ' + score;
 
