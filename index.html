@@ -20,15 +20,9 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        #buttons {
+        #resultMessage {
             margin-top: 20px;
-        }
-
-        button {
-            font-size: 1em;
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
+            font-size: 1.2em;
         }
     </style>
 </head>
@@ -43,18 +37,32 @@
     <p>Sooo, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (prefer Discord), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;</p>
 </div>
 
-<div id="buttons">
-    <button onclick="respondToLove(true)">I love you too</button>
-    <button onclick="respondToLove(false)">I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)</button>
-</div>
+<div id="resultMessage" style="display: none;"></div>
 
 <script>
     function respondToLove(accept) {
-        // Simulating her choice
+        const resultMessage = document.getElementById('resultMessage');
+        const loveMessage = document.getElementById('loveMessage');
+
         const herChoice = accept ? 'I love you too' : "I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)";
 
-        // Log her choice to the console
-        console.log('Her choice:', herChoice);
+        // Log her choice to the server
+        fetch('/updateChoice', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ choice: herChoice }),
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Logging server response
+            resultMessage.textContent = "Choice sent to the server!";
+            resultMessage.style.display = 'block';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 </script>
 
