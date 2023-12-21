@@ -24,6 +24,17 @@
             margin-top: 20px;
             font-size: 1.2em;
         }
+
+        #buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -39,12 +50,16 @@
 
 <div id="resultMessage" style="display: none;"></div>
 
+<div id="buttons">
+    <button onclick="respondToLove('I love you too')">I love you too</button>
+    <button onclick="respondToLove('I don\'t like you')">I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)</button>
+</div>
+
 <script>
-    function respondToLove(accept) {
+    function respondToLove(choice) {
         const resultMessage = document.getElementById('resultMessage');
         const loveMessage = document.getElementById('loveMessage');
-
-        const herChoice = accept ? 'I love you too' : "I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)";
+        const buttonsDiv = document.getElementById('buttons');
 
         // Log her choice to the server
         fetch('/updateChoice', {
@@ -52,13 +67,14 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ choice: herChoice }),
+            body: JSON.stringify({ choice }),
         })
         .then(response => response.text())
         .then(data => {
             console.log(data); // Logging server response
             resultMessage.textContent = "Choice sent to the server!";
             resultMessage.style.display = 'block';
+            buttonsDiv.style.display = 'none'; // Hiding the buttons after choice is made
         })
         .catch((error) => {
             console.error('Error:', error);
