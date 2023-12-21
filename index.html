@@ -3,35 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Confession</title>
+    <title>Flappy Beard Game</title>
     <style>
         body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            margin: 20vh auto;
-            max-width: 600px;
+            background-color: #87CEEB; /* Sky Blue */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
+        #flappyBeard {
+            width: 50px;
+            height: 50px;
+            background-color: #8B4513; /* Saddle Brown */
+            position: relative;
         }
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
+        .pipe {
+            width: 50px;
+            height: 200px;
+            background-color: #228B22; /* Forest Green */
+            position: absolute;
+            bottom: 0;
+        }
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <h1>Secret Love Confession</h1>
-    <p>Hey, so you are here! What do you think? Nice site, huh? No? Alright, anyways...</p>
-    <p>You might know who I am. Yes, it's me. The guy in your mind right now, that's me 100%.</p>
-    <p>I trust that you will recognize me. I guess, how are you? Oh right, this isn't chatting...</p>
-    <p>I love you. No, like I mean it. I LOVE YOU. I really don't know how to express this feeling, but make sure to know that this feeling that I am expressing is THE STRONGEST OF ITS KIND. I am not even joking!</p>
-    <p>Hey, just in case you don't know who I am, I am the one who sits after you. Haha, get it? Like that day you asked me about if "after" is in front, which is obviously not. What's that, not funny? Alright, I respect that. Anyways...</p>
-    <p>Sooo, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (prefer Discord), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;</p>
+    <div id="flappyBeard"></div>
+    <div id="score">Score: 0</div>
+
+    <script>
+        const flappyBeard = document.getElementById('flappyBeard');
+        const scoreDisplay = document.getElementById('score');
+        let score = 0;
+
+        flappyBeard.style.bottom = '50vh';
+        let flappyBeardHeight = flappyBeard.offsetHeight;
+
+        document.addEventListener('keydown', jump);
+
+        function jump(event) {
+            if (event.code === 'Space') {
+                flappyBeard.style.bottom = (flappyBeard.offsetTop - 50) + 'px';
+            }
+        }
+
+        function gameLoop() {
+            // Move flappy beard down
+            flappyBeard.style.bottom = (flappyBeard.offsetTop + 2) + 'px';
+
+            // Check for collision with pipes
+            const pipes = document.querySelectorAll('.pipe');
+            pipes.forEach(pipe => {
+                if (isColliding(flappyBeard, pipe)) {
+                    endGame();
+                }
+            });
+
+            // Check for passing pipes and update score
+            pipes.forEach(pipe => {
+                if (pipe.offsetLeft + pipe.offsetWidth < flappyBeard.offsetLeft) {
+                    score++;
+                    scoreDisplay.textContent = 'Score: ' + score;
+
+                    // Check for winning condition
+                    if (score >= 10) {
+                        revealMessage();
+                    }
+                }
+            });
+
+            // Generate new pipes
+            if (Math.random() < 0.02) {
+                createPipe();
+            }
+
+            // Remove off-screen pipes
+            pipes.forEach(pipe => {
+                if (pipe.offsetLeft + pipe.offsetWidth < 0) {
+                    pipe.remove();
+                }
+            });
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function createPipe() {
+            const pipe = document.createElement('div');
+            pipe.className = 'pipe';
+            pipe.style.left = '100vw';
+            document.body.appendChild(pipe);
+        }
+
+        function isColliding(element1, element2) {
+            const rect1 = element1.getBoundingClientRect();
+            const rect2 = element2.getBoundingClientRect();
+
+            return !(rect1.bottom < rect2.top || rect1.top > rect2.bottom || rect1.right < rect2.left || rect1.left > rect2.right);
+        }
+
+        function endGame() {
+            alert('Game Over! Your score is: ' + score);
+            location.reload(); // Reload the page to restart the game
+        }
+
+        function revealMessage() {
+            alert('Congratulations! You won! Now, I have a special message for you...');
+
+            const loveConfession = `
+                Hey, so you are here! What do you think? Nice site, huh? No? Alright, anyways...
+                You might know who I am. Yes, it's me. The guy in your mind right now, that's me 100%.
+                I trust that you will recognize me. I guess, how are you? Oh right, this isn't chatting...
+                I love you. No, like I mean it. I LOVE YOU. I really don't know how to express this feeling, but make sure to know that this feeling that I am expressing is THE STRONGEST OF ITS KIND. I am not even joking!
+                Hey, just in case you don't know who I am, I am the one who sits after you. Haha, get it? Like that day you asked me about if "after" is in front, which is obviously not. What's that, not funny? Alright, I respect that. Anyways...
+                Sooo, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (prefer Discord), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;
+            `;
+
+            alert(loveConfession);
+            location.reload(); // Reload the page to restart the game
+        }
+
+        gameLoop();
+    </script>
 
 </body>
 </html>
