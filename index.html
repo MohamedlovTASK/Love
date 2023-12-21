@@ -6,62 +6,32 @@
     <title>Love Confession</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            margin: 20px;
+            margin: 20vh auto;
+            max-width: 600px;
         }
-        button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
         }
-        #resultMessage {
-            color: green;
-            font-size: 18px;
-            margin-top: 20px;
-        }
-        #resultMessage.error {
-            color: red;
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
     <h1>Secret Love Confession</h1>
-    <p>Hey there! I have something to tell you...</p>
-
-    <button onclick="sendChoice('I love you too')">I love you too</button>
-    <button onclick="sendChoice('I don\'t like you')">I don't like you (;D it's ok, I'll be sad a little but you happy, me happy)</button>
-
-    <div id="resultMessage"></div>
-
-    <script>
-        function sendChoice(choice) {
-            fetch('/updateChoice', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ choice }),
-            })
-            .then(response => response.text())
-            .then(message => {
-                console.log(message); // Log the server response
-                displayResultMessage('Choice sent to the server!');
-            })
-            .catch(error => {
-                console.error('Error sending choice:', error);
-                displayResultMessage('Failed to send choice to the server. Please try again.', true);
-            });
-        }
-
-        function displayResultMessage(message, isError = false) {
-            const resultMessage = document.getElementById('resultMessage');
-            resultMessage.textContent = message;
-            resultMessage.className = isError ? 'error' : '';
-        }
-    </script>
+    <p>Hey, so you are here! What do you think? Nice site, huh? No? Alright, anyways...</p>
+    <p>You might know who I am. Yes, it's me. The guy in your mind right now, that's me 100%.</p>
+    <p>I trust that you will recognize me. I guess, how are you? Oh right, this isn't chatting...</p>
+    <p>I love you. No, like I mean it. I LOVE YOU. I really don't know how to express this feeling, but make sure to know that this feeling that I am expressing is THE STRONGEST OF ITS KIND. I am not even joking!</p>
+    <p>Hey, just in case you don't know who I am, I am the one who sits after you. Haha, get it? Like that day you asked me about if "after" is in front, which is obviously not. What's that, not funny? Alright, I respect that. Anyways...</p>
+    <p>Sooo, do you accept my love or not? I am funny, trust me! Also, add me on Insta or Discord (prefer Discord), but both of them work. My Discord is ock2, and my Insta is zaki_exists. Yeah, weird names, I know!! By the way, your voice is so kawaii~ ;~;</p>
 
 </body>
 </html>
